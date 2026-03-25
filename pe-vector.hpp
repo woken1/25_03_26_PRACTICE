@@ -9,6 +9,8 @@ namespace knk {
     ~Vector();
     Vector();
 
+    bool isEmpty() const noexcept;
+
     private:
     T* data;
     size_t size, capacity;
