@@ -8,15 +8,41 @@ namespace knk {
     public:
     ~Vector();
     Vector();
+    Vector(const Vector< T >& rhs) = delete;
+    Vector(size_t size, const T& value);
+
+    Vector< T >& operator=(const Vector< T >& rhs) = delete;
 
     bool isEmpty() const noexcept;
     size_t getSize() const noexcept;
 
+    void pushBack(const T&);
+    void popBack();
+
     private:
     T* data;
-    size_t size, capacity;
+    size_t size_, capacity_;
   };
 }
+
+template< class T >
+knk::Vector< T >::Vector(size_t size, const T&):
+  data_(size ? new T[size] : nullptr),
+  size_(0),
+  capacity_(size)
+{
+  for (size_t i = 0; i < size; ++i){
+    try {
+      data_[i] = value;
+    }
+    catch (...) {
+      delete[] data_;
+      throw;
+    }
+    ++size_;
+  }
+}
+
 template< class T >
 bool knk::Vector< T >::getSize() const noexcept {
   return size_;
