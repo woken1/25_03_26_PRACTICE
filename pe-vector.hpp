@@ -16,30 +16,32 @@ namespace knk {
     bool isEmpty() const noexcept;
     size_t getSize() const noexcept;
 
+    //Реализовать и протестировать
+    size_t getCapacity() const noexcept;
     void pushBack(const T&);
     void popBack();
 
     private:
     T* data;
     size_t size_, capacity_;
+
+    explicit Vector(size_t size);
   };
 }
 
 template< class T >
-knk::Vector< T >::Vector(size_t size, const T&):
+knk::Vector< T >::Vector(size_t size):
   data_(size ? new T[size] : nullptr),
-  size_(0),
+  size_(size),
   capacity_(size)
+{}
+
+template< class T >
+knk::Vector< T >::Vector(size_t size, const T& value):
+  Vector(size)
 {
   for (size_t i = 0; i < size; ++i){
-    try {
-      data_[i] = value;
-    }
-    catch (...) {
-      delete[] data_;
-      throw;
-    }
-    ++size_;
+    data_[i] = value;
   }
 }
 
